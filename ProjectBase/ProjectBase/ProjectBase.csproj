@@ -1,0 +1,149 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-maccatalyst;net7.0-android;net7.0-ios</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
+		<OutputType>Exe</OutputType>
+		<RootNamespace>ProjectBase</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Display name -->
+		<ApplicationTitle>MangaPlus</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.projectbase</ApplicationId>
+		<ApplicationIdGuid>732b9f81-d1b2-4892-b15b-6f9f9ece0bfe</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>F7793B6EA15684E27122ADB155C45F217C9DB532</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\manga_plus_logo.png" Color="#dbd5d5" />
+		<EmbeddedResource Include="Resources\Fonts\Manga-Font.ttf">
+		  <CopyToOutputDirectory></CopyToOutputDirectory>
+		</EmbeddedResource>
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\Manga-Font.ttf" />
+	  <None Remove="Resources\Fonts\Manga-Italic.ttf" />
+	  <None Remove="Resources\Images\background_test1.png" />
+	  <None Remove="Resources\Images\dragonball_tome1.jpg" />
+	  <None Remove="Resources\Images\dragonball_tome2.jpg" />
+	  <None Remove="Resources\Images\dragonball_tome3.jpg" />
+	  <None Remove="Resources\Images\dragonball_tome4.jpg" />
+	  <None Remove="Resources\Images\dragonball_tome5.jpg" />
+	  <None Remove="Resources\Images\fruitsbasket_tome1.jpg" />
+	  <None Remove="Resources\Images\fruitsbasket_tome2.jpg" />
+	  <None Remove="Resources\Images\fruitsbasket_tome3.jpg" />
+	  <None Remove="Resources\Images\fruitsbasket_tome4.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome1.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome10.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome11.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome12.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome2.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome3.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome4.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome5.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome6.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome7.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome8.jpg" />
+	  <None Remove="Resources\Images\kingdom_tome9.jpg" />
+	  <None Remove="Resources\Images\Manga_Plus_Logo.png" />
+	  <None Remove="Resources\Images\mugiwara.jpg" />
+	  <None Remove="Resources\Images\onepiece_tome1.jpg" />
+	  <None Remove="Resources\Images\onepiece_tome2.jpg" />
+	  <None Remove="Resources\Images\onepiece_tome57.jpg" />
+	  <None Remove="Resources\Images\onepiece_tome58.jpg" />
+	  <None Remove="Resources\Images\onepiece_tome59.jpg" />
+	  <None Remove="Resources\Images\vagabond_tome1.jpg" />
+	  <None Remove="Resources\Images\vagabond_tome2.jpg" />
+	  <None Remove="Resources\Images\vagabond_tome3.jpg" />
+	  <None Remove="Resources\Images\vagabond_tome4.jpg" />
+	  <None Remove="Resources\Images\vagabond_tome5.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+	  <PackageReference Include="Prism.Core" Version="8.1.97" />
+	  <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
+	  <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Platforms\MacCatalyst\DeviceOrientationServices.cs">
+	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Update="Platforms\MacCatalyst\UserManagementServices.cs">
+	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\DetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FormPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\UserPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+	  <PackageReference Include="CommunityToolkit.Maui">
+	    <Version>5.0.0</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+	  <PackageReference Include="CommunityToolkit.Maui">
+	    <Version>5.0.0</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-windows10.0.19041.0'">
+	  <PackageReference Include="CommunityToolkit.Maui">
+	    <Version>5.0.0</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+</Project>

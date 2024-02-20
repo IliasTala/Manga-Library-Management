@@ -1,0 +1,150 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectBase.View.DetailsPage"
+             xmlns:viewmodel="clr-namespace:ProjectBase.ViewModel"
+             xmlns:model="clr-namespace:ProjectBase.Model"
+             x:DataType="viewmodel:DetailsViewModel"
+             x:Name="DetailPage">
+
+    <!-- Barre de menu pour les exportations -->
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Exportations" >
+            <MenuFlyoutItem Text="Export to .txt"
+                            Command="{x:Binding Source={RelativeSource 
+                            AncestorType={x:Type viewmodel:DetailsViewModel}}, Path=ExportTxtCommand}"/>
+            <MenuFlyoutItem Text="Export to .csv"
+                            Command="{x:Binding Source={RelativeSource 
+                            AncestorType={x:Type viewmodel:DetailsViewModel}}, Path=ExportCsvCommand}"/>
+        </MenuBarItem>
+       
+    </ContentPage.MenuBarItems>
+
+    <!-- Grille pour organiser le contenu -->
+    <Grid>
+        <!-- StackLayout pour les options de filtrage -->
+        <StackLayout>
+            <!-- ScrollView pour permettre le defilement horizontal des options -->
+            <ScrollView Orientation="Horizontal"  
+                        HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" 
+                             BackgroundColor="#3A3A3A" 
+                             Padding="5" 
+                             Margin="8" 
+                             Spacing="10"  >
+                    <!-- Frame pour regrouper les options de filtrage -->
+                    <Frame CornerRadius="5" 
+                           Padding="0" 
+                           BorderColor="LightGray" 
+                           BackgroundColor="#3A3A3A" 
+                           HasShadow="True">
+                        <StackLayout Orientation="Horizontal" 
+                                     BackgroundColor="#3A3A3A" 
+                                     Padding="5" 
+                                     Margin="8" 
+                                     Spacing="10">
+                            <!-- Labels et cases a cocher pour les choix de genres -->
+                            <Label Text="Shonen " 
+                                   VerticalOptions="Center"/>
+                            <CheckBox x:Name="ChoiceShonenCheckBox" 
+                                      IsChecked="{Binding ChoiceShonen}" />
+                            <Label Text="Seinen " 
+                                   VerticalOptions="Center"/>
+                            <CheckBox x:Name="ChoiceSeinenCheckBox" 
+                                      IsChecked="{Binding ChoiceSeinen}" />
+                            <Label Text="Shojo" 
+                                   VerticalOptions="Center"/>
+                            <CheckBox x:Name="ChoiceShojoCheckBox" 
+                                      IsChecked="{Binding ChoiceShojo}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Frame pour regrouper les options de tri -->
+                    <Frame CornerRadius="5" 
+                           Padding="0" 
+                           BorderColor="LightGray" 
+                           BackgroundColor="#3A3A3A" 
+                           HasShadow="True">
+                        <StackLayout Orientation="Horizontal" 
+                                     BackgroundColor="#3A3A3A" 
+                                     Padding="5" 
+                                     Margin="8" 
+                                     Spacing="10">
+                            <!-- Labels et cases a cocher pour les choix de tri -->
+                            <Label Text="Price" 
+                                   VerticalOptions="Center" />
+                            <CheckBox x:Name="SortByPriceCheckBox" 
+                                      IsChecked="{Binding SortByPrice}" />
+                            <Label Text="Licence" 
+                                   VerticalOptions="Center" />
+                            <CheckBox x:Name="SortByLicenceCheckBox" 
+                                      IsChecked="{Binding SortByLicence}" />
+                            <Label Text="Author" 
+                                   VerticalOptions="Center" />
+                            <CheckBox x:Name="SortByAuthorCheckBox" 
+                                      IsChecked="{Binding SortByAuthor}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!-- Label et commutateur pour l inversion -->
+                    <Label Text="Sort A to Z " 
+                           VerticalOptions="Center" 
+                           Padding="10"/>
+                    <Switch x:Name="reverseSwitch" 
+                            IsToggled="{Binding Reverse}" />
+                </StackLayout>
+            </ScrollView>
+
+            <!-- ScrollView pour permettre le defilement vertical de la collection -->
+            <ScrollView Orientation="Vertical" 
+                        Grid.Column="0" 
+                        VerticalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand">
+                <!-- CollectionView pour afficher la liste de mangas -->
+                <CollectionView x:Name="mangaCollectionView"  
+                                Grid.Column="0" 
+                                SelectionMode="None" 
+                                ItemsSource="{Binding MyShownList}">
+                    <CollectionView.ItemTemplate>
+                        <!-- Modele de donnees pour chaque element de la liste -->
+                        <DataTemplate x:DataType="model:MangaModel">
+                            <!-- Cadre autour de chaque element -->
+                            <Frame VerticalOptions="FillAndExpand" 
+                                   HorizontalOptions="FillAndExpand"  
+                                   Padding="0">
+                                <Grid Padding="0" 
+                                      ColumnDefinitions="*,*" 
+                                      BackgroundColor="OrangeRed" >
+                                    <HorizontalStackLayout Padding="40">
+                                        <!-- Image labels et informations du manga -->
+                                        <Image Aspect="AspectFill" 
+                                               HeightRequest="230" 
+                                               Source="{Binding Cover}" 
+                                               WidthRequest="150" />
+                                        <VerticalStackLayout VerticalOptions="Center" 
+                                                             Padding="10" 
+                                                             Spacing="2">
+                                            <Label Text="{Binding Id}"/>
+                                            <Label Text="{Binding Licence}"/>
+                                            <Label Text="{Binding Title}"/>
+                                            <Label Text="{Binding Author}"/>
+                                            <Label Text="{Binding Publisher}"/>
+                                            <Label Text="{Binding Price, StringFormat='{0:F2} euro'}"/>
+                                            <Label Text="{Binding Style}"/>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </StackLayout>
+        <ActivityIndicator
+        Grid.RowSpan="2"
+        Grid.ColumnSpan="2"
+        HorizontalOptions="Fill"
+        IsRunning="{Binding IsBusy}"
+        IsVisible= "{Binding IsBusy}"
+        VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ProjectBase.ViewModel"
+             xmlns:model="clr-namespace:ProjectBase.Model"
+             x:DataType="viewmodel:MainViewModel"
+             x:Class="ProjectBase.MainPage"
+             x:Name="MyPage"
+             Title="Version 2.0">
+
+    <Grid>
+        <!-- Definition des trois lignes dans la grille -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Image d arriere-plan -->
+        <Image x:Name="Blabla"
+               Source="background_test2.png"
+               Aspect="AspectFill"
+               Grid.RowSpan="3"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand" />
+
+        <!-- Logo de l application -->
+        <Image Source="Manga_Plus_Logo.png"
+               Grid.Row="0"
+               WidthRequest="1900"
+               HeightRequest="900"
+               Margin="0,-250,0,0"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Aspect="AspectFit" />
+
+        <!-- StackLayout contenant un bouton -->
+        <StackLayout Grid.Row="1" 
+                     HorizontalOptions="End" 
+                     VerticalOptions="Start" 
+                     Margin="0,-350,90, 0">
+            <Button Text="{Binding ButtonChangeBackground}" 
+                    TextColor="Black" 
+                    BackgroundColor="{Binding ButtonBackgroundColor}" 
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=LogUserChoiceCommand}"/>
+        </StackLayout>
+
+        <!-- Bouton pour acceder a la page de base de donnees -->
+        <Button Text="Database"
+                Grid.Row="0"
+                Command="{Binding GoToUserPageCommand}"
+                BackgroundColor="DarkOrange"
+                TextColor="Black"
+                Padding="25"
+                Margin="150,100,0,150"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                IsVisible="{Binding IsAdmin}"/>
+        
+        <Button Text="Formulaire"
+                Grid.Row="0"
+                BackgroundColor="DarkOliveGreen"
+                TextColor="Black"
+                Padding="25"
+                Margin="150,100,0,150"
+                HorizontalOptions="Start"
+                VerticalOptions="End"
+                IsVisible="{Binding IsAdmin}"
+                Command="{Binding GoToFormPageCommand}"/>
+
+        <!-- Grid affiche lorsque la connexion n est pas etablie -->
+        <Grid Grid.Row="2" IsVisible="{Binding IsNotConnected}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Entry pour le nom d utilisateur -->
+            <Entry Grid.Row="0" 
+                   Placeholder="Username" 
+                   Text="{Binding Username}" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" 
+                   TextColor="Black"
+                   BackgroundColor="AliceBlue"
+                   Margin="0,30,0,5"
+                   WidthRequest="250" />
+
+            <!-- Entry pour le mot de passe -->
+            <Entry Grid.Row="1" 
+                   Placeholder="Password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   BackgroundColor="AliceBlue"
+                   TextColor="Black"
+                   WidthRequest="250" />
+
+            <!-- Bouton de connexion -->
+            <Button x:Name="MyBtn" 
+                    Text="Login"
+                    Grid.Row="2"
+                    FontFamily="MangaFont"
+                    Command="{Binding LoginCommand}"
+                    FontSize="Large"
+                    BackgroundColor="OrangeRed"
+                    TextColor="Black"
+                    Padding="25,5,25,10"
+                    Margin="0,20,0,10"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+
+        </Grid>
+
+        <!-- Bouton pour acceder a la page de la mangatheque -->
+        <Button x:Name="MyButton" 
+                IsVisible="{Binding IsConnected}"
+                Text="Mangatheque"
+                Grid.Row="2"
+                FontFamily="MangaFont"
+                Command="{Binding GoToDetailsPageCommand}"
+                FontSize="Large"
+                BackgroundColor="OrangeRed"
+                TextColor="Black"
+                Padding="25"
+                Margin="0,0,0,200"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+
+    </Grid>
+</ContentPage>
